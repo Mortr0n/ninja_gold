@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Gold</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Qahiri&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <p id="gold_label">Your Gold:</p>
+            <p id="current_gold">{{request.session.gold_amt}}</p>
+            <form action="/reset" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="reset" id="reset_button" class="gold_buttons">
+            </form>
+            
+        </div>
+        <div id="main">
+            <div class="money_maker">
+                <h2>Farm</h2>
+                <p class="gold_earned">(earns 10-20 gold)</p>
+                <form action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="farm" name="area" value="farm" >
+                    <input type="submit" value="find gold" id="farm_gold" class="gold_buttons">
+                </form>
+            </div>
+            <div class="money_maker">
+                <h2>cave</h2>
+                <p class="gold_earned">(earns 5-10 gold)</p>
+                <form action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="cave" name="area" value="cave">
+                    <input type="submit" value="find gold" id="cave_gold" class="gold_buttons">
+                </form>
+            </div>
+            <div class="money_maker">
+                <h2>house</h2>
+                <p class="gold_earned">(earns 2-5 gold)</p>
+                <form action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="house" name="area" value="house">
+                    <input type="submit" value="find gold" id="house_gold" class="gold_buttons">
+                </form>
+            </div>
+            <div class="money_maker">
+                <h2>casino</h2>
+                <p class="gold_earned">(earns 0-50 gold)</p>
+                <form action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="casino" name="area" value="casino">
+                    <input type="submit" value="find gold" id="casino_gold" class="gold_buttons">
+                </form>
+            </div>
+        </div>
+        <h3 >Activities</h3>
+        <div id="footer">
+            
+
+            {% for activity in request.session.activities %}
+            <p>{{activity}} </p>
+            {% endfor %}
+            
+        </div>
+    </div>
+</body>
+
+</html>
